@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Буль Буль Карасики</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #020c1b, #0a4c6c, #021b2b, #0d2b45);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comfortaa', cursive, sans-serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: clamp(2rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: lowercase;
+            animation: floatText 4s ease-in-out infinite;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #0088cc;
+        }
+
+        @keyframes floatText {
+            0%, 100% { 
+                transform: translateY(0) scale(1); 
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+            }
+            50% { 
+                transform: translateY(-25px) scale(1.05); 
+                text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 100px #0088cc;
+            }
+        }
+
+        /* Стили для пузырьков */
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(0, 255, 255, 0.2));
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.3);
+            animation: rise linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes rise {
+            0% {
+                bottom: -100px;
+                transform: translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                bottom: 100vh;
+                transform: translateX(50px) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles" id="bubbles"></div>
+    <div class="container">
+        <h1>буль буль карасики</h1>
+    </div>
+
+    <script>
+        // Генерация пузырьков
+        const bubblesContainer = document.getElementById('bubbles');
+        const numberOfBubbles = 40; // Количество пузырьков
+
+        for (let i = 0; i < numberOfBubbles; i++) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            
+            // Случайный размер от 10 до 80 пикселей
+            const size = Math.random() * 70 + 10;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            
+            // Случайная позиция по горизонтали
+            bubble.style.left = `${Math.random() * 100}vw`;
+            
+            // Случайная скорость подъема от 5 до 15 секунд
+            const duration = Math.random() * 10 + 5;
+            bubble.style.animationDuration = `${duration}s`;
+            
+            // Случайная задержка старта
+            bubble.style.animationDelay = `${Math.random() * 10}s`;
+            
+            bubblesContainer.appendChild(bubble);
+        }
+    </script>
+</body>
+</html>
